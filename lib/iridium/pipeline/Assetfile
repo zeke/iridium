@@ -53,6 +53,7 @@
 # The individual pipeline steps are documented as well so you can
 # understand them.
 
+require 'uri'
 tmpdir app.tmp_path.join("pipeline")
 
 # == The JavaScript pipeline
@@ -308,7 +309,7 @@ input app.build_path.join("preoptimization") do
 
   if app.config.pipeline.manifest
     match "**/*" do
-      cache_manifest { |asset| asset }
+      cache_manifest { |asset| URI.escape(asset) }
     end
   end
 
