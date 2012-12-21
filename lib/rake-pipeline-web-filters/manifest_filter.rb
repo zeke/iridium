@@ -18,7 +18,7 @@ module Rake::Pipeline::Web::Filters
           path
         end
 
-      end.join("\n")
+      end.compact.join("\n")
 
       output.write ERB.new(template).result(binding)
     end

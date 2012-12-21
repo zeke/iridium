@@ -309,7 +309,17 @@ input app.build_path.join("preoptimization") do
 
   if app.config.pipeline.manifest
     match "**/*" do
-      cache_manifest { |asset| URI.escape(asset) }
+      cache_manifest { |asset|
+        if app.config.pipeline.manifest_reject
+          if Regexp.new(app.config.pipeline.manifest_reject).match(asset)
+            nil
+          else
+            URI.escape(asset)
+          end
+        else
+          URI.escape(asset)
+        end
+      }
     end
   end
 
